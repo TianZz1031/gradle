@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pzz.mybatis.mapper.UserMapper">
+
+    <sql id="tableName">
+        ${table_name}s
+    </sql>
+
+    <select id="getUserById" resultType="user">
+        select * from
+        <include refid="tableName">
+            <property name="table_name" value="user"/>
+        </include>
+        where id = #{id}
+    </select>
+
+    <select id="getAllUser" resultType="user">
+        select * from users
+    </select>
+
+    <select id="getLastUser" resultType="user">
+        select * from users ORDER BY id DESC LIMIT 1
+    </select>
+
+
+    <insert id="addUser"  useGeneratedKeys="true">
+        insert into users(uname,age) values(#{uname},#{age})
+    </insert>
+
+    <!--<update id="updateUser">
+        update users
+        <set>
+            <if test="uname != null">uname=#{uname},</if>
+            <if test="age != null">age=#{age},</if>
+        </set>
+        where id = #{id}
+    </update>-->
+
+    <delete id="deleteUser" >
+        delete from users where id = #{id}
+    </delete>
+
+
+    <select id="getFullUserById" resultMap="fullUser">
+        select
+        user.id         as user_id,
+        user.uname      as user_name,
+        user.age        as user_age,
+        user.parent     as user_parent,
+        user.partner     as user_partner,
+        partner.id      as partner_id,
+        partner.uname   as partner_name,
+        partner.age     as partner_age,
+        partner.parent  as partner_parent,
+        partner.partner as partner_partner,
+        son.id          as son_id,
+        son.uname       as son_name,
+        son.age         as son_age,
+        son.parent      as son_parent,
+        son.partner     as son_partner
+        from
+        users user left join users partner on user.partner = partner.id left join users son on user.id = son.parent
+        where user.id = #{id}
+    </select>
+
+    <resultMap id="fullUser" type="user">
+        <id property="id" column="user_id"/>
+        <result property="uname" column="user_name"/>
+        <result property="age" column="user_age"/>
+        <association property="parent" javaType="user">
+            <id property="id" column="son_id"/>
+            <result property="uname" column="parent_name"/>
+            <result property="age" column="parent_age"/>
+            <result property="partner.id" column="parent_partner"/>
+            <result property="parent.id" column="parent_parent"/>
+        </association>
+        <collection property="sons" ofType="user">
+            <id property="id" column="son_id"/>
+            <result property="uname" column="son_name"/>
+            <result property="age" column="son_age"/>
+            <result property="partner.id" column="son_partner"/>
+            <result property="partner.id" column="son_parent"/>
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+
+
+</mapper>

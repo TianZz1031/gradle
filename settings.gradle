@@ -1,3 +1,4 @@
 rootProject.name = 'grandle'
 include 'mybatis'
+include 'designPattern'
 
