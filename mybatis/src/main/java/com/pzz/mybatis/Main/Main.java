@@ -1,15 +1,9 @@
 package com.pzz.mybatis.Main;
 
-import com.pzz.mybatis.beans.User;
-import com.pzz.mybatis.mapper.UserMapper;
 import com.pzz.mybatis.utils.DaoUtiles;
 import com.pzz.mybatis.utils.DaoUtilesImpl;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.io.File;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +16,11 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static DaoUtiles daoUtiles = new DaoUtilesImpl();
     public static void main(String[] args) {
+        File file = new File("src/main/resources/log4j.properties");
+        System.out.println(file.isDirectory());
+    }
+
+    private static void testThreadPool() {
         ScheduledThreadPoolExecutor threadPoolExecutor = new ScheduledThreadPoolExecutor(2);
         Thread thread = new Thread(new Runnable() {
             @Override

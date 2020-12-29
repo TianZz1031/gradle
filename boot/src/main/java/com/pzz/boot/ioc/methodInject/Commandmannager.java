@@ -1,0 +1,51 @@
+package com.pzz.boot.ioc.methodInject;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import java.util.Map;
+
+/**
+ * @program: grandle
+ * @description:
+ * @author: pzz
+ * @create: 2020-12-29 09:27
+ **/
+
+public abstract class Commandmannager {
+
+    public Object process() {
+        Command command = createCommand();
+        command.print();
+        return null;
+    }
+
+    @Lookup("myCommand")
+    protected abstract Command createCommand();
+}
+
+/*
+public class Commandmannager implements ApplicationContextAware {
+    //A:CommandManager	B:Command
+    private ApplicationContext applicationContext;
+    public Object process(Map commandState) {
+        // grab a new instance of the appropriate Command
+        Command command = createCommand();
+        // set the state on the (hopefully brand new) Command instance
+        return command;
+    }
+    protected Command createCommand() {
+        // notice the Spring API dependency!
+        return this.applicationContext.getBean("command", Command.class);
+    }
+    public void setApplicationContext(
+            ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    public static void main(String[] args) {
+
+    }
+}*/
