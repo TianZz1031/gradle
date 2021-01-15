@@ -1,5 +1,6 @@
 package com.pzz.boot.ioc.methodInject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Bean;
  **/
 public class Command {
 
+//    @Autowired
     public void print(){
         System.out.println(this);
     }

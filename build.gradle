@@ -4,11 +4,6 @@ allprojects {
     apply plugin: 'war'
     //注：本来所有的语言环境和打包方式都可以直接放在plugins里面，但是这里会报错 plugins {	id 'java'}
 
-
-
-
-
-
     //gav坐标
     group 'com.pzz'
     version '1.0-SNAPSHOT'
